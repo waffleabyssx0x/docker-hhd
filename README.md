@@ -1,20 +1,16 @@
-![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
-![Alpine Linux](https://img.shields.io/badge/Alpine_Linux-%230D597F.svg?style=for-the-badge&logo=alpine-linux&logoColor=white)
+# Handheld Daemon Container
 
-# Alpine Linux Handheld Daemon Docker Container
+[![Docker](https://img.shields.io/badge/docker-waffo/hhd-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)](https://hub.docker.com/r/waffo/hhd)
+[![Alpine Linux](https://img.shields.io/badge/Alpine_Linux-%230D597F.svg?style=for-the-badge&logo=alpine-linux&logoColor=white)](https://alpinelinux.org/)
 
-This container includes both
-[Handheld Daemon](https://github.com/hhd-dev/hhd) and [Handheld Daemon UI](https://github.com/hhd-dev/hhd-ui)
+[![badge](https://img.shields.io/badge/HHD-3.5.9-pink?style=for-the-badge&logo=github)](https://github.com/hhd-dev/hhd)
+[![badge](https://img.shields.io/badge/HHD_UI-3.2.3-pink?style=for-the-badge&logo=github)](https://github.com/hhd-dev/hhd-ui)
+
+This container includes both [Handheld Daemon](https://github.com/hhd-dev/hhd) and [Handheld Daemon UI](https://github.com/hhd-dev/hhd-ui) for easy deployment 😊
 
 Port `5335` is used for Handheld Daemon. By default, it will listen to 127.0.0.1:5335 inside the container and cannot be trivially exposed to the host. This container uses socat to expose the service at port `5336`, which in turn can be mapped to the docker host port `5335`. For `hhd-ui` port `17000` is used.
 
-## Building
-
-```sh
-docker build -t hhd .
-```
-
-## Running
+## Instructions
 
 Before running the container make sure udev rules are set correctly on the host.
 
@@ -45,7 +41,7 @@ Once the container is running, using the UI is as simple as accessing `http://lo
 
 Authentication token is needed to access settings. Token can be read from `token` file created at the `config` folder. This file is being created once HHD is up and running.
 
-Finally, run the container:
+Simply run the container with the following command:
 
 ```sh
 docker run \
@@ -59,11 +55,19 @@ docker run \
     --restart=unless-stopped \
     -d \
     --name hhd \
-    hhd
+    waffo/hhd
 ```
 
 Once launched you can check the process logs:
 
 ```sh
 docker logs -f hhd
+```
+
+## Building it yourself
+
+If you want to build the container yourself, you can do so with the following command:
+
+```sh
+docker build -t waffo/hhd .
 ```
