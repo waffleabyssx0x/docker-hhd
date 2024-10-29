@@ -16,6 +16,6 @@ chmod 770 /home/hhd/.config/hhd
 
 # Create a state file
 STATEFILE=/home/hhd/.config/hhd/state.yml
-test -f $STATEFILE || install -Dm660 -o hhd -g hhd_grp /dev/null "$STATEFILE"
+test -f "$STATEFILE" || install -Dm660 -o hhd -g hhd_grp /dev/null "$STATEFILE"
 
 /opt/hhd/venv/bin/hhd --user hhd
