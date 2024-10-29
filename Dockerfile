@@ -1,4 +1,4 @@
-FROM alpine as builder
+FROM alpine:3.20.3 as builder
 ARG VERSION_HHD="v3.5.9"
 ARG VERSION_ADJUSTOR="3.5.2"
 EXPOSE 5335
@@ -20,7 +20,7 @@ RUN \
     pip install -e . && \
     pip3 install "adjustor==${VERSION_ADJUSTOR}"
 
-FROM alpine as uibuilder
+FROM alpine:3.20.3 as uibuilder
 ARG VERSION_UI="v3.2.3"
 WORKDIR /opt
 RUN \
@@ -33,7 +33,7 @@ RUN \
     npm ci && \
     npm run build_noerr
 
-FROM alpine
+FROM alpine:3.20.3
 RUN \
     # runtime deps
     apk add shadow python3 hidapi eudev fuse dbus-libs glib gobject-introspection musl-locales \
