@@ -1,0 +1,21 @@
+#!/usr/bin/with-contenv sh
+set -ex
+
+# Set UID and GID if provided
+if [ ! -z "$UID" ]; then
+    usermod -u $UID hhd
+fi
+
+if [ ! -z "$GID" ]; then
+    groupmod -g $GID hhd_grp
+fi
+
+# Ensure correct ownership and permissions of the .config/hhd directory
+chown hhd:hhd_grp /home/hhd/.config/hhd
+chmod 770 /home/hhd/.config/hhd
+
+# Create a state file
+STATEFILE=/home/hhd/.config/hhd/state.yml
+test -f $STATEFILE || install -Dm660 -o hhd -g hhd_grp /dev/null "$STATEFILE"
+
+/opt/hhd/venv/bin/hhd --user hhd
